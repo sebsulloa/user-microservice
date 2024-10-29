@@ -91,13 +91,7 @@ def get_user_companies(
 @router.post("/users-view")
 async def get_user_with_incidents(
     request_data: UserCompanyRequest,
-    #current_user: dict = Depends(get_current_user)
-):
-    #if not current_user:
-    #    raise HTTPException(status_code=401, detail="Authentication required")
-    
-    #token = jwt.encode(current_user, SECRET_KEY, algorithm=ALGORITHM)
-        
+):        
     incidents_data = get_user_incidents_request(request_data.user_id, request_data.company_id, 'token')
     
     return incidents_data
