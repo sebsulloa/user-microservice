@@ -45,13 +45,8 @@ def create_company(company: CompanyCreate):
 @router.get("/{company_id}", response_model=CompanyResponse, status_code=200)
 def get_company(
     company_id: str = Path(..., description="Id of the company"),
-    current_user: dict = Depends(get_current_user)
 ):
-    if not current_user:
-        raise HTTPException(status_code=401, detail="Authentication required")
-    
-    token = jwt.encode(current_user, SECRET_KEY, algorithm=ALGORITHM)
-    response_data, status_code = get_company_request(company_id, token)
+    response_data, status_code = get_company_request(company_id, 'token')
     if status_code != 200:
         raise HTTPException(status_code=status_code, detail=response_data)
     return response_data

@@ -85,13 +85,8 @@ def get_user_companies(
 @router.post("/companies-user")
 def get_user_companies(
     user_doc_info: UserIdRequest,
-    current_user: dict = Depends(get_current_user)
 ):
-    if not current_user:
-         raise HTTPException(status_code=401, detail="Authentication required")
-    
-    token = jwt.encode(current_user, SECRET_KEY, algorithm=ALGORITHM)
-    response_data, status_code = get_user_companies_request_user(user_doc_info, token)
+    response_data, status_code = get_user_companies_request_user(user_doc_info, 'token')
     
     return response_data
 
