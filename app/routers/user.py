@@ -82,7 +82,7 @@ def get_user_companies(
 def get_user_companies(
     user_doc_info: UserIdRequest,
 ):
-    response_data, status_code = get_user_companies_request_user(user_doc_info, 'token')
+    response_data, _ = get_user_companies_request_user(user_doc_info, 'token')
     
     return response_data
 
