@@ -8,8 +8,8 @@ import jwt
 
 router = APIRouter(prefix="/user-management/user", tags=["User"])
 
-USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "http://192.168.68.111:8002/user")
-QUERY_INCIDENT_SERVICE_URL = os.getenv("QUERY_INCIDENT_SERVICE_URL", "http://192.168.68.111:8006/incident-query")
+USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "https://api.aws.cloud/user")
+QUERY_INCIDENT_SERVICE_URL = os.getenv("QUERY_INCIDENT_SERVICE_URL", "https://api.aws.cloud/incident-query")
 SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'secret_key')
 ALGORITHM = "HS256"
 APLICATION = "application/json"
@@ -91,13 +91,7 @@ def get_user_companies(
 @router.post("/users-view")
 async def get_user_with_incidents(
     request_data: UserCompanyRequest,
-    #current_user: dict = Depends(get_current_user)
-):
-    #if not current_user:
-    #    raise HTTPException(status_code=401, detail="Authentication required")
-    
-    #token = jwt.encode(current_user, SECRET_KEY, algorithm=ALGORITHM)
-        
+):        
     incidents_data = get_user_incidents_request(request_data.user_id, request_data.company_id, 'token')
     
     return incidents_data
