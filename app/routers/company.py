@@ -30,9 +30,18 @@ def create_company_request(company: CompanyCreate):
 
 def get_company_request(company_id: str, token: str):
     api_url = USER_SERVICE_URL
-    endpoint = f"/company/{company_id}"
+
+    from urllib.parse import urljoin
+    
+    endpoint = f"company/{company_id}"
+    full_url = urljoin(api_url, endpoint)
+    
     headers = {"token": f"{token}"}
-    response = requests.get(f"{api_url}{endpoint}", headers=headers)
+    response = requests.get(
+        url=full_url,
+        headers=headers
+    )
+    
     return response.json(), response.status_code
 
 @router.post("/", response_model=CompanyResponse, status_code=201)
