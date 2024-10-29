@@ -8,7 +8,7 @@ import jwt
 
 router = APIRouter(prefix="/user-management/company", tags=["Company"])
 
-USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "http://192.168.68.111:8002/user")
+USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "https://api.aws.cloud/user")
 SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'secret_key')
 ALGORITHM = "HS256"
 

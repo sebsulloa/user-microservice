@@ -8,8 +8,8 @@ import jwt
 
 router = APIRouter(prefix="/user-management/user", tags=["User"])
 
-USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "http://192.168.68.111:8002/user")
-QUERY_INCIDENT_SERVICE_URL = os.getenv("QUERY_INCIDENT_SERVICE_URL", "http://192.168.68.111:8006/incident-query")
+USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "https://api.aws.cloud/user")
+QUERY_INCIDENT_SERVICE_URL = os.getenv("QUERY_INCIDENT_SERVICE_URL", "https://api.aws.cloud/incident-query")
 SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'secret_key')
 ALGORITHM = "HS256"
 APLICATION = "application/json"
