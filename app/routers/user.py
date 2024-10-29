@@ -12,6 +12,7 @@ USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "http://192.168.68.111:8002/use
 QUERY_INCIDENT_SERVICE_URL = os.getenv("QUERY_INCIDENT_SERVICE_URL", "http://192.168.68.111:8006/incident-query")
 SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'secret_key')
 ALGORITHM = "HS256"
+APLICATION = "application/json"
 
 def get_user_info_request(user_id: UUID, token: str):
     api_url = USER_SERVICE_URL
@@ -25,7 +26,7 @@ def get_user_incidents_request(user_id: UUID, company_id: UUID, token: str):
     endpoint = "/user-company"
     headers = {
         "token": f"{token}",
-        "Content-Type": "application/json"
+        "Content-Type": APLICATION
     }
     data = {
         "user_id": str(user_id),
@@ -48,7 +49,7 @@ def get_user_companies_request(user_doc_info: UserDocumentInfo, token: str):
     endpoint = "user/companies"
     headers = {
         "token": f"{token}",
-        "Content-Type": "application/json"
+        "Content-Type": APLICATION
     }
     data = user_doc_info.model_dump_json()
     response = requests.post(f"{api_url}/{endpoint}", data=data, headers=headers)
@@ -59,7 +60,7 @@ def get_user_companies_request_user(user_doc_info: UserIdRequest, token: str):
     endpoint = "user/companies-user"
     headers = {
         "token": f"{token}",
-        "Content-Type": "application/json"
+        "Content-Type": APLICATION
     }
     data = user_doc_info.model_dump_json()
     response = requests.post(f"{api_url}/{endpoint}", data=data, headers=headers)
@@ -80,13 +81,8 @@ def get_user_companies(
 @router.post("/companies-user")
 def get_user_companies(
     user_doc_info: UserIdRequest,
-    #current_user: dict = Depends(get_current_user)
 ):
-    #if not current_user:
-     #    raise HTTPException(status_code=401, detail="Authentication required")
-    
-    #token = jwt.encode(current_user, SECRET_KEY, algorithm=ALGORITHM)
-    response_data, _ = get_user_companies_request_user(user_doc_info, 'token')
+    response_data, status_code = get_user_companies_request_user(user_doc_info, 'token')
     
     return response_data
 
